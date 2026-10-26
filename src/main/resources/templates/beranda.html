@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Perpustakaan</title>
+    </head>
+    <body>
+    <h1>Perpustakaan</h1>
+
+    <ul>
+        <li>
+            <a th:href="@{/buku}">Lihat Buku</a>
+            <ul>
+                <li><a th:href="@{/buku/tambah}">Tambah Buku</a></li>
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/anggota}">Lihat Anggota</a>
+            <ul>
+                <li><a th:href="@{/anggota/tambah}">Tambah Anggota</a></li>
+            </ul>
+        </li>
+    </ul>
+    </body>
+</html>

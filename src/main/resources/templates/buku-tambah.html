@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <a th:href="@{/}">← Ke Beranda</a>
+    <title>Tambah Buku</title>
+</head>
+<body>
+<h1>Tambah Buku</h1>
+
+<form th:action="@{/buku/tambah}" method="post">
+    <input type="text" name="idBuku" placeholder="ID" required>
+    <input type="text" name="judul" placeholder="Judul" required>
+    <input type="number" name="stok" value="1" min="0" required>
+    <button type="submit">Simpan</button>
+</form>
+
+<a th:href="@{/buku}">Lihat Buku</a>
+
+</body>
+</html>
