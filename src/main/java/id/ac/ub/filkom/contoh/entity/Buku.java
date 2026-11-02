@@ -1,4 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package id.ac.ub.filkom.contoh.entity;
+
+/**
+ *
+ * @author ASUS
+ */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,4 +40,5 @@ public class Buku {
     public String getIdBuku() { return idBuku; }
     public String getJudul()  { return judul; }
     public int getStok()      { return stok; }
+    public void kurangiStok() { this.stok--;}
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * Cukup interface; implementasinya dibuat otomatis oleh Spring.
  * Method bawaan: findAll(), findById(), save(), deleteById(), ...
  */
+
 public interface BukuRepository extends JpaRepository<Buku, String> {
 
     // Query turunan dari nama method:

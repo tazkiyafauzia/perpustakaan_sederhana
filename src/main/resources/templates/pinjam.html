@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pinjam Buku</title>
+    </head>
+    <body>
+        <a th:href="@{/}">← Ke Beranda</a>
+        <h1>Pinjam Buku</h1>
+
+        <p th:if="${pesanError}" th:text="${pesanError}" style="color:red">Pesan error</p>
+
+        <form th:action="@{/pinjam}" method="post">
+            <p>
+                Anggota:
+                <select name="idAnggota" required>
+                    <option value="">-- pilih anggota --</option>
+                    <option th:each="a : ${daftarAnggota}"
+                            th:value="${a.idAnggota}"
+                            th:text="${a.idAnggota + ' - ' + a.nama}">A001 - Nama</option>
+                </select>
+            </p>
+            <p>
+                Buku:
+                <select name="idBuku" required>
+                    <option value="">-- pilih buku --</option>
+                    <option th:each="b : ${daftarBuku}"
+                            th:value="${b.idBuku}"
+                            th:text="${b.judul + ' (stok: ' + b.stok + ')'}">Judul</option>
+                </select>
+            </p>
+            <button type="submit">Pinjam</button>
+        </form>
+    </body>
+</html>

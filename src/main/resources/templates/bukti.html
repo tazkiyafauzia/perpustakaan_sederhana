@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <a th:href="@{/}">← Ke Beranda</a>
+    <title>Bukti Peminjaman</title>
+</head>
+<body>
+<h1>Bukti Peminjaman</h1>
+
+<table border="1">
+    <tr><th>No. Transaksi</th><td th:text="${bukti.idTransaksi}">1</td></tr>
+    <tr><th>Anggota</th><td th:text="${bukti.namaAnggota}">Nama</td></tr>
+    <tr><th>Buku</th><td th:text="${bukti.judulBuku}">Judul</td></tr>
+    <tr><th>Tanggal Pinjam</th><td th:text="${bukti.tanggalPinjam}">2026-01-01</td></tr>
+    <tr><th>Jatuh Tempo</th><td th:text="${bukti.tanggalJatuhTempo}">2026-01-08</td></tr>
+</table>
+
+<p>
+    <a th:href="@{/pinjam}">Pinjam lagi</a>
+</p>
+</body>
+</html>
