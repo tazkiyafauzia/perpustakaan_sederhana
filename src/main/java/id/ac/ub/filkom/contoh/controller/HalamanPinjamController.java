@@ -15,8 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /** Boundary: halaman pinjam buku (controller + template pinjam.html / bukti.html). */
 @Controller
@@ -54,5 +54,22 @@ public class HalamanPinjamController {
     private void isiPilihan(Model model) {
         model.addAttribute("daftarAnggota", pinjamService.daftarAnggota());
         model.addAttribute("daftarBuku", pinjamService.daftarBuku());
+    }
+    
+    @GetMapping("/kembali")
+    public String daftarKembali(Model model) {
+        model.addAttribute("daftarPinjam", pinjamService.daftarPinjamAktif());
+        return "kembali";
+    }
+
+    @PostMapping("/kembali")
+    public String prosesKembali(@RequestParam Long idTransaksi,
+                                RedirectAttributes redirect) {
+        try {
+            redirect.addFlashAttribute("pesan", pinjamService.kembalikan(idTransaksi));
+        } catch (PinjamGagalException e) {
+            redirect.addFlashAttribute("pesanError", e.getMessage());
+        }
+        return "redirect:/kembali";
     }
 }

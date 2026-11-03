@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kembalikan Buku</title>
+</head>
+<body>
+<h1>Kembalikan Buku</h1>
+
+<p th:if="${pesan}" th:text="${pesan}" style="color:green">Pesan sukses</p>
+<p th:if="${pesanError}" th:text="${pesanError}" style="color:red">Pesan error</p>
+
+<p th:if="${#lists.isEmpty(daftarPinjam)}">Tidak ada buku yang sedang dipinjam.</p>
+
+<table border="1" th:unless="${#lists.isEmpty(daftarPinjam)}">
+    <tr>
+        <th>No.</th><th>Anggota</th><th>Buku</th>
+        <th>Tanggal Pinjam</th><th>Jatuh Tempo</th><th>Aksi</th>
+    </tr>
+    <tr th:each="t : ${daftarPinjam}">
+        <td th:text="${t.id}">1</td>
+        <td th:text="${t.anggota.nama}">Nama</td>
+        <td th:text="${t.buku.judul}">Judul</td>
+        <td th:text="${t.tanggalPinjam}">2026-01-01</td>
+        <td th:text="${t.tanggalJatuhTempo}">2026-01-08</td>
+        <td>
+            <form th:action="@{/kembali}" method="post">
+                <input type="hidden" name="idTransaksi" th:value="${t.id}">
+                <button type="submit">Kembalikan</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<p><a th:href="@{/}">← Ke Beranda</a></p>
+</body>
+</html>

@@ -19,7 +19,6 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
-/** Entity: satu objek = satu baris peminjaman. */
 @Entity
 @Table(name = "transaksi_pinjam")
 public class TransaksiPinjam {
@@ -38,8 +37,9 @@ public class TransaksiPinjam {
 
     private LocalDate tanggalPinjam;
     private LocalDate tanggalJatuhTempo;
+    private LocalDate tanggalKembali;
 
-    protected TransaksiPinjam() { } // wajib ada untuk JPA
+    protected TransaksiPinjam() { }
 
     public TransaksiPinjam(Anggota anggota, Buku buku,
                            LocalDate tanggalPinjam, LocalDate tanggalJatuhTempo) {
@@ -54,4 +54,7 @@ public class TransaksiPinjam {
     public Buku getBuku() { return buku; }
     public LocalDate getTanggalPinjam() { return tanggalPinjam; }
     public LocalDate getTanggalJatuhTempo() { return tanggalJatuhTempo; }
+    public LocalDate getTanggalKembali() { return tanggalKembali; }
+    public boolean isAktif() { return tanggalKembali == null; }
+    public void kembalikan(LocalDate tanggal) {this.tanggalKembali = tanggal;}
 }

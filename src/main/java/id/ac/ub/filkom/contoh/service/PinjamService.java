@@ -19,14 +19,10 @@ import id.ac.ub.filkom.contoh.repository.BukuRepository;
 import id.ac.ub.filkom.contoh.repository.TransaksiPinjamRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.util.List;
 
-import java.time.LocalDate;
-import java.util.List;
-
-/** Control: logika peminjaman buku. */
 @Service
 public class PinjamService {
 
@@ -62,7 +58,7 @@ public class PinjamService {
         if (buku.getStok() <= 0) {
             throw new PinjamGagalException("Stok buku \"" + buku.getJudul() + "\" habis.");
         }
-        if (transaksiRepository.countByAnggota(anggota) >= anggota.getBatasPinjam()) {
+        if (transaksiRepository.countByAnggotaAndTanggalKembaliIsNull(anggota) >= anggota.getBatasPinjam()) {
             throw new PinjamGagalException(anggota.getNama()
                     + " sudah mencapai batas pinjam (" + anggota.getBatasPinjam() + " buku).");
         }
@@ -76,5 +72,33 @@ public class PinjamService {
 
         return new Bukti(transaksi.getId(), anggota.getNama(), buku.getJudul(),
                 transaksi.getTanggalPinjam(), transaksi.getTanggalJatuhTempo());
+    }
+    
+    public List<TransaksiPinjam> daftarPinjamAktif() {return transaksiRepository.findByTanggalKembaliIsNull();}
+
+    @Transactional
+    public String kembalikan(Long idTransaksi) {
+        TransaksiPinjam transaksi = transaksiRepository.findById(idTransaksi)
+                .orElseThrow(() -> new PinjamGagalException("Transaksi tidak ditemukan."));
+
+        if (!transaksi.isAktif()) {
+            throw new PinjamGagalException("Buku ini sudah dikembalikan.");
+        }
+
+        LocalDate hariIni = LocalDate.now();
+        transaksi.kembalikan(hariIni);
+        transaksiRepository.save(transaksi);
+
+        Buku buku = transaksi.getBuku();
+        buku.tambahStok();
+        bukuRepository.save(buku);
+
+        String pesan = "\"" + buku.getJudul() + "\" dari " + transaksi.getAnggota().getNama()
+                + " berhasil dikembalikan.";
+        if (hariIni.isAfter(transaksi.getTanggalJatuhTempo())) {
+            long hari = ChronoUnit.DAYS.between(transaksi.getTanggalJatuhTempo(), hariIni);
+            pesan += " Terlambat " + hari + " hari.";
+        }
+        return pesan;
     }
 }
